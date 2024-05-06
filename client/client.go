@@ -24,6 +24,16 @@ Help menu
 
 var history []string
 
+func Login() string {
+    var userName string
+    fmt.Print("Enter your username: ")
+    _, err := fmt.Scanln(&userName)
+    if err != nil {
+        log.Fatal(err)
+    }
+    return userName
+}
+
 func IsCommand(text string) bool {
 	return strings.HasPrefix(text, "/")
 }
@@ -71,7 +81,7 @@ func HandleRead(conn *net.TCPConn, textView *tview.TextView, app *tview.Applicat
 		if err != nil {
 			log.Fatal(err)
 		}
-		history = append(history, "Server: "+string(reply))
+		history = append(history, string(reply))
 		textView.SetText(strings.Join(history, "\n"))
 		app.ForceDraw()
 	}
@@ -102,6 +112,8 @@ func main() {
 
 	app := tview.NewApplication()
 
+    userName := Login()
+
 	inputField.SetDoneFunc(func(key tcell.Key) {
 		input := inputField.GetText()
 		if IsCommand(input) {
@@ -111,8 +123,8 @@ func main() {
 				HandleCommand(input, conn, textView)
 			}
 		} else {
-			history = append(history, "You: "+inputField.GetText())
-			_, err := conn.Write([]byte(input))
+			history = append(history, "you: "+input)
+			_, err := conn.Write([]byte(fmt.Sprintf("%s: ", userName)+input))
 			if err != nil {
 				log.Fatal(err)
 			}
