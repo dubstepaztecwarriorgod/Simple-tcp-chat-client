@@ -25,13 +25,13 @@ Help menu
 var history []string
 
 func Login() string {
-    var userName string
-    fmt.Print("Enter your username: ")
-    _, err := fmt.Scanln(&userName)
-    if err != nil {
-        log.Fatal(err)
-    }
-    return userName
+	var userName string
+	fmt.Print("Enter your username: ")
+	_, err := fmt.Scanln(&userName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return userName
 }
 
 func IsCommand(text string) bool {
@@ -112,7 +112,7 @@ func main() {
 
 	app := tview.NewApplication()
 
-    userName := Login()
+	userName := Login()
 
 	inputField.SetDoneFunc(func(key tcell.Key) {
 		input := inputField.GetText()
@@ -124,7 +124,7 @@ func main() {
 			}
 		} else {
 			history = append(history, "you: "+input)
-			_, err := conn.Write([]byte(fmt.Sprintf("%s: ", userName)+input))
+			_, err := conn.Write([]byte(fmt.Sprintf("%s: ", userName) + input))
 			if err != nil {
 				log.Fatal(err)
 			}
