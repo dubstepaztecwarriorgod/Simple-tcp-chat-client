@@ -96,7 +96,9 @@ func main() {
     }
 
     textView := tview.NewTextView().SetScrollable(true)
+	textView.SetBackgroundColor(tcell.ColorDefault)
     inputField := tview.NewInputField().SetPlaceholder("Send a message").SetLabel("> ")
+	inputField.SetBackgroundColor(tcell.ColorDefault)
     
     app := tview.NewApplication()
 
